@@ -7,4 +7,5 @@ urlpatterns = [
     url('admin_page/', views.open_admin, name='open_admin'),
     url("index/", views.open_materials, name="open_materials"),
     url('save_info/', views.SaveInfo.as_view()),
+    url('del_info/', views.DelInfo.as_view()),
 ]

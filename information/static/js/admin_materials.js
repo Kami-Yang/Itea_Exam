@@ -10,8 +10,29 @@ $(function () {
             en_name: $("#en_name").val(),
             type: $("#type_select").val()
         }, showResponse)
+    });
+
+    $("#del_info").click(function (e) {
+        var data = $("#show_info").bootstrapTable('getSelections');
+        if(isEmpty(data)){
+            alert("Please select at least one record!!(请至少选择一条记录)");
+            return;
+        }
+        var array = new Array();
+        for(var i = 0 ; i < data.length ; i++){
+            array.push(data[i].id);
+        }
+        ajax("../../information/del_info/", "post", {
+            ids: array.join(",")
+        }, c);
     })
 });
+
+function c(msg) {
+    if(msg.msg){
+        create_table()
+    }
+}
 
 function showResponse(msg) {
     if (!isEmpty(msg)) {

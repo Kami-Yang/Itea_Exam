@@ -1,4 +1,7 @@
 import json
+import uuid
+
+import os
 from django.http import HttpResponse
 from django.shortcuts import render
 from rest_framework import generics, status
@@ -57,4 +60,12 @@ class SaveInfo(generics.GenericAPIView):
         return Response({"msg": "true"}, status=status.HTTP_200_OK)
 
 
-
+class DelInfo(generics.GenericAPIView):
+    def post(self, request):
+        ids = request.POST.get("ids", "").split(",")
+        for info_id in ids:
+            info = models.Information.objects.get(pk=uuid.UUID(info_id))
+            path = "{0}\\information\\static\\media\\{1}".format(os.getcwd(), info.file_name)
+            os.remove(path)
+            info.delete()
+        return Response({"msg": True}, status=status.HTTP_200_OK)
