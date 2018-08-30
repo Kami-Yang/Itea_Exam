@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.js"></script>
+    <!--ajax提交表单需要引入jquery.form.js-->
+    <script type="text/javascript" src="../../static/js/jquery.form.js"></script>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.css"/>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.js"></script>
+
+    <!-- Latest compiled and minified Locales -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/locale/bootstrap-table-zh-CN.min.js"></script>
+    <script type="text/javascript" src="../../static/js/util.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <script type="text/javascript" src="../../static/js/admin_materials.js"></script>
+    <style>
+        button {
+            margin: 1%;
+        }
+    </style>
+</head>
+<body>
+<div style="display: flex; width: 100%;">
+    <button class="btn btn-success" id="add_info" style="margin-left: 70%;">Add(新增)</button>
+    <button class="btn btn-success" id="del_info">del(删除)</button>
+</div>
+<div id="info_table_dom" style="margin: 1%;">
+
+</div>
+
+<!-- 添加模态框 -->
+<div class="modal fade" tabindex="-1" role="dialog" id="add_info_modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Add Question</h4>
+            </div>
+            <div class="modal-body">
+                <h3>Chinese:</h3><input type="text" id="ch_name" name="ch_name"/>
+                <h3>English:</h3><input type="text" id="en_name" name="en_name"/>
+                <h3>Type:</h3>
+                <select id="type_select" name="type">
+                    <option value="1">Commonly Use Words</option>
+                    <option value="2">Commonly Use Words Menu</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="save_info">Save
+                    changes
+                </button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<div style="display: none;">
+    <table id="modal_table"></table>
+</div>
+</body>
+</html>
