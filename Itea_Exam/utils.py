@@ -33,6 +33,7 @@ def to_audio(text):
         'vol': 5,
         'per': 1,
     })
+    print(result)
     if not isinstance(result, dict):
         f = open("{0}\\information\\static\\media\\{1}.mp3".format(os.getcwd(), text), "wb")
         f.write(result)

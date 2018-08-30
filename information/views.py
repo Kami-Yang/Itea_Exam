@@ -34,7 +34,6 @@ def open_materials(request):
         infomations = models.Information.objects.all()
     else:
         infomations = models.Information.objects.filter(info_type=info_type)
-    print(infomations)
     return render(request, "information/show_materials.html", {"informations": infomations})
 
 
@@ -56,6 +55,7 @@ class SaveInfo(generics.GenericAPIView):
             info.info_type_name = "Commonly Use Words Menu"
         info.file_path = "../../static/media/{0}.mp3".format(en_name)
         info.file_name = to_audio(en_name)
+        print(info.file_name)
         info.save()
         return Response({"msg": "true"}, status=status.HTTP_200_OK)
 
