@@ -1,7 +1,7 @@
 import os
 from aip import AipSpeech
 
-
+real_path = os.getcwd()[:-9]
 
 def dic2obj(obj, dic):
     for key, value in dic.items():
@@ -34,8 +34,7 @@ def to_audio(text):
         'per': 1,
     })
     if not isinstance(result, dict):
-        f = open("{0}/information/static/media/{1}.mp3".format(os.getcwd(), text), "wb")
-        print(f)
+        f = open("{0}media/{1}.mp3".format(real_path, text), "wb")
         f.write(result)
         f.close()
     return "{0}.mp3".format(text)

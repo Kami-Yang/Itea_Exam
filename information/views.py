@@ -7,7 +7,7 @@ from django.shortcuts import render
 from rest_framework import generics, status
 from rest_framework.response import Response
 
-from Itea_Exam.utils import to_audio
+from Itea_Exam.utils import to_audio, real_path
 from app01 import models
 
 
@@ -53,7 +53,7 @@ class SaveInfo(generics.GenericAPIView):
             info.info_type_name = "Commonly Use Words"
         else:
             info.info_type_name = "Commonly Use Words Menu"
-        info.file_path = "../../static/media/{0}.mp3".format(en_name)
+        info.file_path = "{0}media/{1}.mp3".format(real_path, en_name)
         info.file_name = to_audio(en_name)
         print(info.file_name)
         info.save()
@@ -65,7 +65,7 @@ class DelInfo(generics.GenericAPIView):
         ids = request.POST.get("ids", "").split(",")
         for info_id in ids:
             info = models.Information.objects.get(pk=uuid.UUID(info_id))
-            path = "{0}\\information\\static\\media\\{1}".format(os.getcwd(), info.file_name)
+            path = "{0}media/{1}".format(real_path, info.file_name)
             os.remove(path)
             info.delete()
         return Response({"msg": True}, status=status.HTTP_200_OK)

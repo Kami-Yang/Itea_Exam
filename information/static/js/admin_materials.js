@@ -66,6 +66,8 @@ function create_table() {
 }
 
 
+
+
 function type_form(value, row, index) {
     if (value == 1) {
         return "Commonly Use Words";
