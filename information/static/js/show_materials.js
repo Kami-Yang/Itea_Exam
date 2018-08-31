@@ -17,36 +17,18 @@ function init_table() {
         {
             field: "ch_name",
             title: "中文",
-            cellStyle: function () {
-                return {
-                    css: {
-                        "font-size": "20px"
-                    }
-                }
-            }
+            class: "font_class"
         },
         {
             field: "en_name",
             title: "English",
-            cellStyle: function () {
-                return {
-                    css: {
-                        "font-size": "20px"
-                    }
-                }
-            }
+            class: "font_class"
         },
         {
             field: "file_path",
             title: "Audio",
             formatter: path_format,
-            cellStyle: function () {
-                return {
-                    css: {
-                        "font-size": "20px"
-                    }
-                }
-            }
+            class: "font_class"
         }
     )
     $("#show_details").bootstrapTable({
@@ -57,13 +39,6 @@ function init_table() {
         pagination: true,
         search: true,
         trimOnSearch: true,
-        rowStyle: function () {
-            return {
-                css: {
-                    "font-size": "20px"
-                }
-            }
-        },
         searchText: "",
         pageSize: 10,
         pageList: [10, 20, 50],
