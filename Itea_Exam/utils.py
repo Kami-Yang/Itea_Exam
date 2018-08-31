@@ -1,7 +1,7 @@
 import os
 from aip import AipSpeech
 
-real_path = os.getcwd()
+real_path = os.getcwd()[:-9]
 
 def dic2obj(obj, dic):
     for key, value in dic.items():
