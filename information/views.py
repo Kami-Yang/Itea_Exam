@@ -66,6 +66,9 @@ class DelInfo(generics.GenericAPIView):
         for info_id in ids:
             info = models.Information.objects.get(pk=uuid.UUID(info_id))
             path = "{0}media/{1}".format(real_path, info.file_name)
-            os.remove(path)
+            try:
+                os.remove(path)
+            except FileNotFoundError as e:
+                print(e.errno)
             info.delete()
         return Response({"msg": True}, status=status.HTTP_200_OK)
