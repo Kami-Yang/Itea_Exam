@@ -116,7 +116,7 @@ class ExamRecord(models.Model):
 class Information(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     ch_name = models.CharField(max_length=128, verbose_name="chinese")
-    en_name = models.CharField(max_length=128, verbose_name="english")
+    en_name = models.CharField(max_length=256, verbose_name="english")
     INFO_CHOICES = (
         (1, "Commonly Use Words"),
         (2, "Commonly Use Words Menu")
