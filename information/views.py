@@ -53,7 +53,7 @@ class SaveInfo(generics.GenericAPIView):
             info.info_type_name = "Commonly Use Words"
         else:
             info.info_type_name = "Commonly Use Words Menu"
-        info.file_path = "../../media/{0}.mp3".format(en_name)
+        info.file_path = "../../../../media/{0}.mp3".format(en_name)
         info.file_name = to_audio(en_name)
         print(info.file_name)
         info.save()
