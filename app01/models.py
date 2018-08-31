@@ -124,7 +124,7 @@ class Information(models.Model):
     info_type = models.IntegerField(choices=INFO_CHOICES, default=2)
     info_type_name = models.CharField(default="Commonly Use Words Menu", max_length=32)
     file_path = models.CharField(max_length=256)
-    file_name = models.CharField(max_length=64)
+    file_name = models.CharField(max_length=256)
 
 
 class Answer(object):
