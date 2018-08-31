@@ -16,16 +16,37 @@ function init_table() {
     columns.push(
         {
             field: "ch_name",
-            title: "中文"
+            title: "中文",
+            cellStyle: function () {
+                return {
+                    css: {
+                        "font-size": "20px"
+                    }
+                }
+            }
         },
         {
             field: "en_name",
-            title: "English"
+            title: "English",
+            cellStyle: function () {
+                return {
+                    css: {
+                        "font-size": "20px"
+                    }
+                }
+            }
         },
         {
             field: "file_path",
             title: "Audio",
-            formatter: path_format
+            formatter: path_format,
+            cellStyle: function () {
+                return {
+                    css: {
+                        "font-size": "20px"
+                    }
+                }
+            }
         }
     )
     $("#show_details").bootstrapTable({
@@ -45,7 +66,7 @@ function init_table() {
         },
         searchText: "",
         pageSize: 10,
-        pageList: [5, 10, 15, 20],
+        pageList: [10, 20, 50],
         onLoadSuccess: function (result) {
             // console.log(result);
         }
