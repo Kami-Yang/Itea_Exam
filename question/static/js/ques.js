@@ -1,10 +1,6 @@
 $(function () {
     //初始化展示问题表格
-    creat_table($("#select_type option:selected").val());
-    //所选类型改变时重新生成表格
-    $("#select_type").change(function (e) {
-        creat_table($("#select_type").val());
-    });
+    creat_table();
     $("#add_step").click(function (e) {
         var datas = $("#add_steps_table").bootstrapTable("getData");
         var data = {"step_class": "", "step_num": datas.length + 1, "detail": "", "importance": "", "score": ""}
@@ -24,8 +20,8 @@ $(function () {
         var array = new Array();
         for (var i = 0; i < datas.length; i++) {
             array.push("step_class:" + datas[i].step_class + ",step_num:" +
-                    datas[i].step_num +",detail:" + datas[i].detail + ",importance:" +
-                    datas[i].importance + ",score:" + datas[i].score
+                datas[i].step_num + ",detail:" + datas[i].detail + ",importance:" +
+                datas[i].importance + ",score:" + datas[i].score
             );
         }
         ajax("question/save_que/", "post", {
@@ -192,19 +188,23 @@ function init_add_table(data) {
     columns.push(
         {
             field: "step_class",
-            title: "NO."
+            title: "NO.",
+            editable: true
         },
         {
             title: "step(步骤)",
-            field: "step_num"
+            field: "step_num",
+            editable: true
         },
         {
             field: "detail",
-            title: "Explain(说明)"
+            title: "Explain(说明)",
+            editable: true
         },
         {
             field: "score",
-            title: "score(分值)"
+            title: "score(分值)",
+            editable: true
         },
         {
             field: "importance",
@@ -231,22 +231,8 @@ function init_add_table(data) {
                 }
                 return;
             }
-            var val = $element.text();
-            var $in = $("#modal_input").clone(true).removeAttr("id");
-            if (val) {
-                $in.val(val);
-            } else {
-                $in.val("");
-            }
-            $element.html("").append($in);
-            $in.focus();
-            $in.blur(function () {
-                var v = $(this).val();
-                eval("row." + field + " = v");
-                $element.html(v);
-            });
         }
-    });
+     });
 }
 
 function show_format(value, row, index) {

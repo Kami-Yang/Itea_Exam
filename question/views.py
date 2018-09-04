@@ -84,7 +84,8 @@ class SaveOrUpdateQue(generics.GenericAPIView):
                         else:
                             st.importance = False
                         st.question_id = question.id
-                        st.save()
+                        if st.detail and st.score:
+                            st.save()
         return Response({"msg": True}, status=status.HTTP_201_CREATED)
 
 
