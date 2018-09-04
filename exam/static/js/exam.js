@@ -86,7 +86,7 @@ function create_table(data) {
         rowStyle: function (row, index) {
             console.log(row.importance);
             if (row.importance) {
-                return {css: {"background-color": "#78909C"}}
+                return {css: {"background-color": "#DDDDDD"}}
             } else {
                 return {css: {"background-color": "white"}}
             }
@@ -101,6 +101,10 @@ function create_table(data) {
                 var is_right = row.is_right
                 var remark = row.remarks
                 var score = row.scoring
+                if(score > row.score){
+                    alert("Wrong score format");
+                    return;
+                }
                 save_step_record(question_id, step_id, is_right, remark, score);
                 $("#show_steps").bootstrapTable('remove', {"field": 'step_num', values: [row.step_num]});
             }
