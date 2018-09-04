@@ -58,11 +58,13 @@ function create_table(data) {
         },
         {
             field: "remarks",
-            title: "remarks"
+            title: "remarks",
+            editable: true
         },
         {
             field: "scoring",
-            title: "score(得分)"
+            title: "score(得分)",
+            editable: true
         },
         {
             field: "right",
@@ -90,26 +92,6 @@ function create_table(data) {
             }
         },
         onClickCell: function (field, value, row, $element) {
-            if (field == "scoring") {
-                $element.html("");
-                var $in = $("#modal_input").clone(true).removeAttr("id").val(row.score);
-                $in.appendTo($element);
-                $in.focus();
-                $in.blur(function () {
-                    row.scoring = $in.val();
-                    $element.html($in.val());
-                });
-            }
-            if (field == "remarks") {
-                $element.html("");
-                var $in = $("#modal_input").clone(true).removeAttr("id").val(value);
-                $in.appendTo($element);
-                $in.focus();
-                $in.blur(function () {
-                    row.remarks = $in.val();
-                    $element.html($in.val());
-                });
-            }
             if (field == "right") {
                 $element.html("pass(通过)");
                 row.is_right = 1;
@@ -130,6 +112,10 @@ function create_table(data) {
                 var is_right = row.is_right
                 var remark = row.remarks
                 var score = row.scoring
+                if(score > row.score){
+                    alert("Wrong score format");
+                    return;
+                }
                 if (row.importance) {
                     if (confirm("this step is importance,if not Satisfy," +
                             "this exam will be end and result is not pass,please confirm")) {

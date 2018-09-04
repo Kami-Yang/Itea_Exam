@@ -36,7 +36,6 @@ class SaveRecord(generics.GenericAPIView):
         is_right = request.POST.get("is_right", "")
         remark = request.POST.get("remark", "")
         score = request.POST.get("score", "")
-        print(score)
         answer = models.AnswerRecord()
         answer.exam = models.ExamRecord.objects.get(pk=uuid.UUID(r_id))
         answer.step = models.Step.objects.get(pk=uuid.UUID(s_id))
@@ -57,12 +56,20 @@ def end_exam(request):
     # steps = models.AnswerRecord.objects.get(pk=uuid.UUID(e_id)).answer.all()
     result = []
     score = 0
+    is_p = True
     questions = models.Question.objects.all().order_by("add_time")
     for question in questions:
         answers = models.AnswerRecord.objects.filter(exam=e_id, question=question.id)
         for ans in answers:
             score += ans.score
+            if not ans.is_right and ans.step.importance:
+                is_p = False
             result.append({"question": question.text, "step": ans.step.detail, "score": ans.score,
                            "is_pass": ans.is_right, "remarks": ans.remark})
+    e_r = models.ExamRecord.objects.get(pk=uuid.UUID(e_id))
+    e_r.score = score
+    if score >= 60 and is_p:
+        e_r.is_pass = True
+    e_r.save()
     result.append({"question": "Total", "score": score})
     return HttpResponse(json.dumps(result), content_type="application/json")
