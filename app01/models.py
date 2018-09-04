@@ -55,7 +55,7 @@ class Step(models.Model):
     )
     step_class = models.CharField(choices=CLASS_CHOICES, default="A", max_length=1)
     step_num = models.IntegerField(null=False, default=1)
-    detail = models.CharField(max_length=128, null=False, unique=True)
+    detail = models.CharField(max_length=128, null=False)
     importance = models.BooleanField(default=0)
     score = models.FloatField(null=False, default=2.0)
 
