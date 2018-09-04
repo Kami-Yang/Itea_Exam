@@ -76,7 +76,7 @@ class SaveOrUpdateQue(generics.GenericAPIView):
                 if steps:
                     for step in steps:
                         st = models.Step()
-                        attrs = step.split(",")
+                        attrs = step.split("//")
                         for attr in attrs:
                             setattr(st, attr.split(":")[0], attr.split(":")[1])
                         if st.importance == "Y":

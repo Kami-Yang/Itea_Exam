@@ -19,9 +19,9 @@ $(function () {
         var datas = $("#add_steps_table").bootstrapTable("getData");
         var array = new Array();
         for (var i = 0; i < datas.length; i++) {
-            array.push("step_class:" + datas[i].step_class + ",step_num:" +
-                datas[i].step_num + ",detail:" + datas[i].detail + ",importance:" +
-                datas[i].importance + ",score:" + datas[i].score
+            array.push("step_class:" + datas[i].step_class + "//step_num:" +
+                datas[i].step_num + "//detail:" + datas[i].detail + "//importance:" +
+                datas[i].importance + "//score:" + datas[i].score
             );
         }
         ajax("question/save_que/", "post", {
