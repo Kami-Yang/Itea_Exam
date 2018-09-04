@@ -31,8 +31,41 @@
     </style>
 </head>
 <body>
-<div style="display: flex; width: 100%;">
-    <button class="btn btn-success" id="show_">exam</button>
+<div style="width: 100%;height: 100%;text-align: center;">
+    <h1 style="width: 100%;">New Staff Confirmation Assessment新员工转正考核</h1><br />
+    <div class="container-fluid" style="margin: 1%;">
+        <div class="row" style="text-align: center;">
+            <div class="col-xs-3 col-sm-3 col-md-3">
+                <h4>Name of Staff(姓名):</h4>
+                <input type="text" id="name"/>
+            </div>
+            <div class="col-xs-3 col-sm-3 col-md-3">
+                <h4>Assessor(s)(考核官):</h4>
+                <input type="text" id="assessor"/>
+            </div>
+            <div class="col-xs-3 col-sm-3 col-md-3">
+                <h4>Date Joined(入职时间):</h4>
+                <input type="date" id="join_date"/>
+            </div>
+            <div class="col-xs-3 col-sm-3 col-md-3">
+                <h4>Assessment Date/Time考核日期/时间:</h4>
+                <input type="date" id="exam_date"/>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <p>Objective</p>
+        <p>Ensure new staff are effectively trained to be able to work
+            independently on the following areas:</p>
+        <p>1. 1st morning opening shift</p>
+        <p>2. Preparation of tea, toppings/drinks</p>
+        <p>3. Customer service/order taking</p>
+        <p>4. Replacement of necessities such as sealer roll, receipt and
+            order sticker</p>
+        <p>5. Closing of outlet</p>
+    </div>
+    <button class="btn btn-primary" id="begin_exam">begin exam</button>
 </div>
 </body>
 </html>

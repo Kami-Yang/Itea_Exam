@@ -35,17 +35,11 @@
     <button class="btn btn-success" id="del_que">del(删除)</button>
     <button class="btn btn-success" id="edit_que">编辑</button>
 </div>
-<select style="margin: 1%;" id="select_type">
-    <option value="1">Choice question 选择题</option>
-    <option value="2">Completion 填空题</option>
-    <option value="3">Judgment problem 判断题</option>
-    <option value="4">Short Answer Questions 简答题</option>
-</select>
 <div id="ques_table_dom" style="margin: 1%;">
 
 </div>
 
-<!-- 添加题目模态框 -->
+<!-- 新增题目模态框 -->
 <div class="modal fade" tabindex="-1" role="dialog" id="add_que_modal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -54,94 +48,21 @@
                         aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title">Add Question</h4>
-            </div>
-            <div class="modal-body" id="add_question_body">
-                <select style="margin: 1%;" id="add_select_type">
-                    <option value="1">Choice question 选择题</option>
-                    <option value="2">Completion 填空题</option>
-                    <option value="3">Judgment problem 判断题</option>
-                    <option value="4">Short Answer Questions 简答题</option>
-                </select>
-                <h3>Question:</h3>
-                <input id="add_que_text" type="text"/><br/>
-                <div style="margin: 1%;" id="select_question">
-                    <h4>select A</h4><input id="select_a" type="text" placeholder="please enter the select A"/><br/>
-                    <h4>select B</h4><input id="select_b" type="text" placeholder="please enter the select B"/><br/>
-                    <h4>select C</h4><input id="select_c" type="text" placeholder="please enter the select C"/><br/>
-                    <h4>select D</h4><input id="select_d" type="text" placeholder="please enter the select D"/><br/>
-                    <h4>The right key</h4><input id="select_e" type="text" placeholder="please enter the right answer"/>
-                </div>
-                <div style="margin: 1%;display:none;" id="completion">
-                    <h4>answer:</h4><input id="add_answer"/>
-                </div>
-                <div style="margin: 1%;display:none;" id="judgment_problem">
-                    <input type="radio" name="is_right" value="1"/>right 正确
-                    <input type="radio" name="is_right" value="0"/>error 错误
-                </div>
-                <div style="margin: 1%;display: none;" id="operation_question">
-                    <div id="steps_dom">
-
-                    </div>
-                    <button class="btn btn-primary" id="add_step">add step(添加步骤)</button>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="save_que">Save
-                    changes
-                </button>
-            </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
-
-
-<!-- 修改题目模态框 -->
-<div class="modal fade" tabindex="-1" role="dialog" id="edit_que_modal">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"
-                        aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title">Add Question</h4>
+                <h4 class="modal-title">Add Question Lib</h4>
             </div>
             <div class="modal-body">
-                <div style="margin: 1%;" id="edit_question_body">
-                    <select id="edit_que_type">
-                        <option value="1">Choice question 选择题</option>
-                        <option value="2">Completion 填空题</option>
-                        <option value="3">Judgment problem 判断题</option>
-                        <option value="4">Short Answer Questions 简答题</option>
-                    </select>
-                    <h3>Question:</h3>
-                    <input id="edit_que_text" type="text"/><br/>
-                    <div style="margin: 1%;" id="edit_select_question">
-                        <h4>select A</h4><input id="edit_select_a" type="text" placeholder="please enter the select A"/><br/>
-                        <h4>select B</h4><input id="edit_select_b" type="text" placeholder="please enter the select B"/><br/>
-                        <h4>select C</h4><input id="edit_select_c" type="text" placeholder="please enter the select C"/><br/>
-                        <h4>select D</h4><input id="edit_select_d" type="text" placeholder="please enter the select D"/><br/>
-                        <h4>The right key</h4><input id="edit_select_e" type="text"
-                                                     placeholder="please enter the right answer"/>
-                    </div>
-                    <div style="margin: 1%;display:none;" id="edit_completion">
-                        <h4>answer:</h4><input id="edit_answer"/>
-                    </div>
-                    <div style="margin: 1%;display:none;" id="edit_judgment_problem">
-                        <input type="radio" name="edit_is_right" value="1"/>right 正确
-                        <input type="radio" name="edit_is_right" value="0"/>error 错误
-                    </div>
+                <div style="margin: 1%;">
+                    <p>please input the question:</p><input type="text" id="add_text"/>
+                </div>
+                <div id="add_que_table">
+
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="save_que_edit">Save
-                    changes
+                <button type="button" class="btn btn-primary" id="add_step">add step</button>
+                <button type="button" class="btn btn-primary" id="save_ques">
+                    Save
                 </button>
             </div>
         </div>
@@ -150,12 +71,20 @@
     <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
-
 
 <div style="display: none;">
     <table id="modal_table"></table>
     <input id="modal_input" type="text"/>
-    <input type="checkbox" id="modal_check"/>
+    <input type="checkbox" id="modal_check" />
+    <select id="modal_select">
+        <option value="A" selected>A</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+        <option value="D">D</option>
+        <option value="E">E</option>
+        <option value="F">F</option>
+        <option value="G">G</option>
+    </select>
 </div>
 </body>
 </html>

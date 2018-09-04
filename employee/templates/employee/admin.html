@@ -20,49 +20,38 @@
     <script type="text/javascript" src="../../static/js/admin.js"></script>
     <style>
         body {
-            margin: 0;
+            margin: 1%;
             padding: 0;
         }
     </style>
 </head>
 <body style="overflow-y: auto;">
-<div style="width: 50%;display: flex; margin-left: 35%;">
-    <!--<ul class="nav nav-tabs">
-        <li role="presentation" class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
-               aria-expanded="false">
-                Dropdown <span class="caret"></span>
-            </a>
-            <ul class="dropdown-menu" id="libs_exam">
-                {% for lib in libs %}
-                <li role="presentation"><a href="#" id="{{lib.id}}">{{lib.name}}</a></li>
-                {% endfor %}
-            </ul>
-        </li>
-        <li role="presentation"><a href="#" id="libs">Lib</a></li>
-        <li role="presentation"><a href="#" id="ques">Question</a></li>
-    </ul>-->
-    <button class="btn btn-success" id="libs" style="margin: 1%; width: 120px;">Lib</button>
-    <button class="btn btn-success" id="ques" style="margin: 1%; width: 120px;">Question</button>
-    <button class="btn btn-success" id="employee" style="margin: 1%; width: 120px;">Employee</button>
-    <button class="btn btn-success" id="materials" style="margin: 1%; width: 120px;">Materials</button>
-    <!--<div class="dropdown" style="margin: 1%; width: 120px;">
-        <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="true">
-            Examination
-            <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" id="libs_exam">
-            {% for lib in libs %}
-            <li role="presentation"><a href="#" id="{{lib.id}}">{{lib.name}}</a></li>
-            {% endfor %}
-        </ul>
-    </div>-->
+<div class="container-fluid">
+    <div class="row" style="margin-top:15%; ">
+        <div class="col-md-3 col-xs-3 col-sm-3 col-lg-3">
+        </div>
+        <div class="col-md-3 col-xs-3 col-sm-3 col-lg-3">
+            <button class="btn btn-success" id="libs" style="font-size: 20px;">Lib(试题库)</button>
+        </div>
+        <div class="col-md-3 col-xs-3 col-sm-3 col-lg-3">
+            <button class="btn btn-success" id="ques" style="font-size: 20px;">Question(问题)</button>
+        </div>
+        <div class="col-md-3 col-xs-3 col-sm-3 col-lg-3">
+        </div>
+    </div>
+    <div class="row" style="margin-top: 2%;">
+        <div class="col-md-3 col-xs-3 col-sm-3 col-lg-3">
+        </div>
+        <div class="col-md-3 col-xs-3 col-sm-3 col-lg-3">
+            <button class="btn btn-success" id="employee" style="font-size: 20px;">Employee(用户)</button>
+        </div>
+        <div class="col-md-3 col-xs-3 col-sm-3 col-lg-3">
+            <button class="btn btn-success" id="materials" style="font-size: 20px;">Materials(学习材料)</button>
+        </div>
+        <div class="col-md-3 col-xs-3 col-sm-3 col-lg-3">
+        </div>
+    </div>
 </div>
-<iframe src="../../question_lib/libs/" id="frame" style="margin:1%; height: 100%; width: 98%;"
-        scrolling="no" onload="changeFrameHeight()" frameborder="0">
-
-</iframe>
 
 </body>
 </html>

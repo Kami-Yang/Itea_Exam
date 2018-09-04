@@ -6,86 +6,32 @@ $(function () {
         creat_table($("#select_type").val());
     });
     $("#add_step").click(function (e) {
-        $("#modal_input").clone(true).attr("id", "add_step_"
-            + $("#steps_dom input[type='text']").length).appendTo("#steps_dom");
-        $("#modal_check").clone(true).attr("id", "add_check_" +
-            $("#steps_dom input[type='checkbox']").length).appendTo("#steps_dom");
+        var datas = $("#add_steps_table").bootstrapTable("getData");
+        var data = {"step_class": "", "step_num": datas.length + 1, "detail": "", "importance": "", "score": ""}
+        datas.push(data);
+        $("#add_steps_table").bootstrapTable('load', data);
     });
-    $("#add_select_type").change(function (e) {
-        var val = $("#add_select_type").val();
-        $("#add_question_body div").hide();
-        if (val == 1) {
-            $("#select_question").show();
-        }
-        if (val == 2) {
-            $("#completion").show();
-        }
-        if (val == 3) {
-            $("#judgment_problem").show();
-        }
-        if (val == 4) {
-            $("#operation_question").show();
-            $("#steps_dom").html("");
-            $("#modal_input").clone(true).attr("id", "add_step_0").appendTo("#steps_dom");
-            $("#modal_check").clone(true).attr("id", "add_check_0").appendTo("#steps_dom");
-        }
-    });
-    $("#edit_que_type").change(function (e) {
-        var val = $("#edit_que_type").val();
-        $("#edit_question_body div").hide();
-        if (val == 1) {
-            $("#edit_select_question").show();
-            $("#edit_select_question input").val();
-        }
-        if (val == 2) {
-            $("#edit_completion").show();
-            $("#edit_completion input").val();
-        }
-        if (val == 3) {
-            $("#edit_judgment_problem").show();
-        }
-        if (val == 4) {
-            return;
-        }
-    })
     //新增题目
     $("#add_que").click(function (e) {
         $("#add_que_modal").modal("show");
-        $("#add_que_text").val("");
-        $("#select_question input").val("");
-        $("#completion input").val("");
+        $("#add_text").val("");
+        init_add_table("");
     });
     //保存题目
-    $("#save_que").click(function (e) {
-        var que = $("#add_que_text").val();
-        if (isEmpty(que)) {
-            return;
+    $("#save_ques").click(function (e) {
+        var text = $("#add_text").val();
+        var datas = $("#add_steps_table").bootstrapTable("getData");
+        var array = new Array();
+        for (var i = 0; i < datas.length; i++) {
+            array.push("step_class:" + datas[i].step_class + ",step_num:" +
+                    datas[i].step_num +",detail:" + datas[i].detail + ",importance:" +
+                    datas[i].importance + ",score:" + datas[i].score
+            );
         }
-        var type = $("#add_select_type").val();
-        var data = {text: que, que_type: type}
-        if (type == 1) {
-            data.option_a = $("#select_a").val();
-            data.option_b = $("#select_b").val();
-            data.option_c = $("#select_c").val();
-            data.option_d = $("#select_d").val();
-            data.right_key = $("#select_e").val();
-        }
-        if (type == 2) {
-            data.answer = $("#add_answer").val();
-        }
-        if (type == 3) {
-            data.is_right = $("input[name='is_right']:checked").val();
-        }
-        if (type == 4) {
-            var array = new Array();
-            //var inputs = $("#steps_dom").find("input");
-            for(var i = 0 ; i < $("#steps_dom input").length ; i++){
-                console.log($("#add_check_" + i).prop("checked"));
-                array.push($("#add_step_" + i).val() + "/" + $("#add_check_" + i).prop("checked"));
-            }
-            data.steps = array.join(";");
-        }
-        ajax("question/saveQue/", "post", data, s);
+        ajax("question/save_que/", "post", {
+            text: text,
+            steps: array.join(";")
+        }, a);
     });
     //删除题目
     $("#del_que").click(function (e) {
@@ -150,17 +96,17 @@ $(function () {
         }
         var type = $("#edit_que_type").val();
         data.que_type = type
-        if(type == 1){
+        if (type == 1) {
             data.option_a = $("#edit_select_a").val();
             data.option_b = $("#edit_select_b").val();
             data.option_c = $("#edit_select_c").val();
             data.option_d = $("#edit_select_d").val();
             data.right_key = $("#edit_select_e").val();
         }
-        if(type == 2){
+        if (type == 2) {
             data.answer = $("#edit_answer").val();
         }
-        if(type == 3){
+        if (type == 3) {
             data.is_right = $("input[name='edit_is_right']:checked").val();
         }
         ajax("question/edit_que/", "post", data, x);
@@ -183,48 +129,7 @@ function creat_table(type) {
             formatter: type_format
         }
     ]
-    if (type == 1) {
-        array.push(
-            {
-                field: "option_a",
-                title: "option a"
-            }, {
-                field: "option_b",
-                title: "option b"
-            }, {
-                field: "option_c",
-                title: "option c"
-            }, {
-                field: "option_d",
-                title: "option d"
-            }, {
-                field: "right_key",
-                title: "right key"
-            }
-        )
-    }
-    if (type == 2) {
-        array.push(
-            {
-                field: "answer",
-                title: "answer"
-            }
-        )
-    }
-    if (type == 3) {
-        array.push(
-            {
-                field: "is_right",
-                title: "is right",
-                formatter: right_format
-            }
-        )
-    }
-    if (type == 4) {
-        //暂时不添加问答题功能，留待日后补充
-        return;
-    }
-    init_table("../queryQues/", "ques_table_dom", "show_ques", array, {type: type});
+    init_table("../get_ques/", "ques_table_dom", "show_ques", array, "");
 }
 
 
@@ -232,7 +137,7 @@ function creat_table(type) {
  * 修改问题的回调函数
  * the callback of edit question
  * */
-var x = function (msg) {
+var e = function (msg) {
     if (msg.msg) {
         $("#edit_que_modal").modal("hide");
         var type = $("#select_type").val();
@@ -257,7 +162,7 @@ var d = function (msg) {
  * 保存题目的回调函数
  * the callback of save question
  * */
-var s = function (msg) {
+var a = function (msg) {
     if (msg.msg) {
         $("#add_que_modal").modal("hide");
         var type = $("#select_type").val();
@@ -277,13 +182,78 @@ function type_format(value, row, index) {
         return "Judgment problem 判断题";
     }
     if (value == 4) {
-        return "Short Answer Questions 简答题";
+        return "Operation Questions 操作题";
     }
 }
 
-function right_format(value, row, index) {
-    if (value) {
-        return "right(正确)";
+
+function init_add_table(data) {
+    var columns = new Array();
+    columns.push(
+        {
+            field: "step_class",
+            title: "NO."
+        },
+        {
+            title: "step(步骤)",
+            field: "step_num"
+        },
+        {
+            field: "detail",
+            title: "Explain(说明)"
+        },
+        {
+            field: "score",
+            title: "score(分值)"
+        },
+        {
+            field: "importance",
+            title: "importance(重要性)",
+            formatter: show_format
+        }
+    );
+    $("#add_que_table").html("");
+    $("#modal_table").clone(true).attr("id", "add_steps_table").appendTo("#add_que_table");
+    $("#add_steps_table").bootstrapTable({
+        columns: columns,
+        pagination: true,
+        data: data,
+        pageSize: 5,
+        pageList: [5, 10, 15, 20],
+        onClickCell: function (field, value, row, $element) {
+            if (field == "importance") {
+                if ($element.text() == "Y") {
+                    $element.html("N");
+                    row.importance = "N";
+                } else {
+                    $element.html("Y");
+                    row.importance = "Y";
+                }
+                return;
+            }
+            var val = $element.text();
+            var $in = $("#modal_input").clone(true).removeAttr("id");
+            if (val) {
+                $in.val(val);
+            } else {
+                $in.val("");
+            }
+            $element.html("").append($in);
+            $in.focus();
+            $in.blur(function () {
+                var v = $(this).val();
+                eval("row." + field + " = v");
+                $element.html(v);
+            });
+        }
+    });
+}
+
+function show_format(value, row, index) {
+    if (value == "Y") {
+        return "Y";
     }
-    return "error(错误)";
+    else {
+        return "N";
+    }
 }
