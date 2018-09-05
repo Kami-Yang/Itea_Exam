@@ -127,19 +127,23 @@ function create_table(data) {
                         //储存不及格记录
                         save_step_record(question_id, step_id, is_right, remark, score);
                         //结束考试
-
+                        setTimeout("remove_data(" + row.step_num + ")", 1000);
+                        ajax("../exam/end_exam/", "post", {
+                            e_id: r_id
+                        }, e);
                     } else {
                         //修改为通过，储存
                         save_step_record(question_id, step_id, 1, remark, score);
+                        setTimeout("remove_data(" + row.step_num + ")", 1000);
+                        return;
                     }
                 } else {
                     save_step_record(question_id, step_id, is_right, remark, score);
+                    setTimeout("remove_data(" + row.step_num + ")", 1000);
+                    return;
                 }
+                //setTimeout("remove_data(" + row.step_num + ")", 1000);
 
-                setTimeout("remove_data(" + row.step_num + ")", 1000);
-                ajax("../exam/end_exam/", "post", {
-                    e_id: r_id
-                }, e);
                 //$("#show_steps").bootstrapTable('remove', {"field": 'step_num', values: [row.step_num]});
             }
         }
