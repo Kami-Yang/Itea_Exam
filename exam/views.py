@@ -62,6 +62,9 @@ def end_exam(request):
     for question in questions:
         for step in question.steps:
             all_score += step.score
+            answer = models.AnswerRecord.objects.filter(exam=e_id, step=step.id)
+            if not answer and step.importance:
+                is_p = False
         answers = models.AnswerRecord.objects.filter(exam=e_id, question=question.id)
         for ans in answers:
             score += ans.score
