@@ -21,23 +21,26 @@
 
     <!-- Latest compiled and minified Locales -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/locale/bootstrap-table-zh-CN.min.js"></script>
+    <script src="../../static/js/bootstrap-table-export.js"></script>
+    <script src="//rawgit.com/hhurz/tableExport.jquery.plugin/master/tableExport.js"></script>
     <script type="text/javascript" src="../../static/js/util.js"></script>
     <script type="text/javascript" src="../../static/js/employee.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <style>
         button {
             margin: 1%;
         }
-        div input{
+
+        div input {
             margin: 1%;
         }
     </style>
 </head>
 <body>
 <div style="display: flex; width: 100%;">
-    <button class="btn btn-success" id="add_emp" style="margin-left: 65%;">Add(新增)</button>
-    <button class="btn btn-success" id="del_emp">del(删除)</button>
-    <button class="btn btn-success" id="edit_emp">edit(编辑)</button>
+    <!--<button class="btn btn-success" id="add_emp" style="margin-left: 65%;">Add(新增)</button>-->
+    <button class="btn btn-success" id="del_emp" style="margin-left: 85%;">del(删除)</button>
+    <!--<button class="btn btn-success" id="edit_emp">edit(编辑)</button>-->
     <button class="btn btn-success" id="record_detail">detail(详情)</button>
 </div>
 <div id="emp_table_dom" style="margin: 1%;">
@@ -48,69 +51,6 @@
     <table id="modal_table"></table>
 </div>
 
-<!-- 添加用户模态框 -->
-<div class="modal fade" tabindex="-1" role="dialog" id="add_user_modal">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"
-                        aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title">Add User</h4>
-            </div>
-            <div class="modal-body">
-                <div id="employee_message">
-                    name:<input id="add_name"/><br />
-                    username:<input id="add_username"/><br />
-                    password:<input id="add_password"/><br />
-                    join date:<input id="add_join_date" type="date"/><br />
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="save_user_add">Save
-                    changes
-                </button>
-            </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
-
-
-<!-- 添加用户模态框 -->
-<div class="modal fade" tabindex="-1" role="dialog" id="edit_user_modal">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"
-                        aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title">Add User</h4>
-            </div>
-            <div class="modal-body">
-                <div>
-                    name:<input id="edit_name"/><br />
-                    username:<input id="edit_username"/><br />
-                    password:<input id="edit_password"/>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="save_user_edit">Save
-                    changes
-                </button>
-            </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
 
 <!-- 详细信息模态框 -->
 <div class="modal fade" tabindex="-1" role="dialog" id="record_detail_modal">
@@ -121,7 +61,7 @@
                         aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title" id="show_name">Add User</h4>
+                <h4 class="modal-title" id="show_record">Add User</h4>
             </div>
             <div class="modal-body">
                 <div id="record_dom">
@@ -130,8 +70,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="show_details">show details
-                </button>
+{#                <button type="button" class="btn btn-primary" id="show_details">show details#}
+{#                </button>#}
             </div>
         </div>
         <!-- /.modal-content -->

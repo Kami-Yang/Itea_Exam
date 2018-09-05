@@ -28,6 +28,7 @@ function init_table(url, sel, pk_name, columns, data) {
         url: url,
         columns: columns,
         method : "post",
+		clickToSelect:true,
         queryParams : function (params) {
             for(var key in data) {
                 params[key] = data[key];

@@ -93,7 +93,6 @@ function create_table(data) {
         },
         onClickCell: function (field, value, row, $element) {
             if (field == "right") {
-                $element.html("pass(通过)");
                 row.is_right = 1;
                 console.log(row);
                 var question_id = questions[question_num].id;
@@ -101,34 +100,34 @@ function create_table(data) {
                 var is_right = row.is_right
                 var remark = row.remarks
                 var score = row.scoring
-                if(score > row.score){
+                if (score > row.score) {
                     alert("Wrong score format");
                     return;
                 }
+                $element.html("pass(通过)");
                 save_step_record(question_id, step_id, is_right, remark, score);
-                $("#show_steps").bootstrapTable('remove', {"field": 'step_num', values: [row.step_num]});
+                setTimeout("remove_data(" + row.step_num + ")", 1000);
+                //$('#show_steps').bootstrapTable('remove', {'field': 'step_num', values: [row.step_num]});
             }
             if (field == "not_right") {
-                $element.html("no pass(不通过)")
                 row.is_right = 0;
                 var question_id = questions[question_num].id;
                 var step_id = row.id;
                 var is_right = row.is_right
                 var remark = row.remarks
                 var score = row.scoring
-                if(score > row.score){
+                if (score > row.score) {
                     alert("Wrong score format");
                     return;
                 }
+                $element.html("no pass(不通过)");
                 if (row.importance) {
                     if (confirm("this step is importance,if not Satisfy," +
                             "this exam will be end and result is not pass,please confirm")) {
                         //储存不及格记录
                         save_step_record(question_id, step_id, is_right, remark, score);
                         //结束考试
-                        ajax("../exam/end_exam/", "post", {
-                            e_id: r_id
-                        }, e);
+
                     } else {
                         //修改为通过，储存
                         save_step_record(question_id, step_id, 1, remark, score);
@@ -136,10 +135,19 @@ function create_table(data) {
                 } else {
                     save_step_record(question_id, step_id, is_right, remark, score);
                 }
-                $("#show_steps").bootstrapTable('remove', {"field": 'step_num', values: [row.step_num]});
+
+                setTimeout("remove_data(" + row.step_num + ")", 1000);
+                ajax("../exam/end_exam/", "post", {
+                    e_id: r_id
+                }, e);
+                //$("#show_steps").bootstrapTable('remove', {"field": 'step_num', values: [row.step_num]});
             }
         }
     });
+}
+
+function remove_data(step_num) {
+    $("#show_steps").bootstrapTable('remove', {"field": 'step_num', values: [step_num]});
 }
 
 
@@ -198,7 +206,7 @@ function e(msg) {
             fileName: "exam record",  //文件名称设置
             worksheetName: 'sheet1',  //表格工作区名称
             excelstyles: ['background-color', 'color', 'font-size', 'font-weight'],
-            onMsoNumberFormat: DoOnMsoNumberFormat
+            //onMsoNumberFormat: DoOnMsoNumberFormat
         }
     });
 }

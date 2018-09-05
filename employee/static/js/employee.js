@@ -1,170 +1,107 @@
 $(function () {
     create_table();
-    $("#add_emp").click(function (e) {
-        $("#add_user_modal").modal("show");
-        $("#employee_message input").val("");
-    });
-    //保存新增用户
-    $("#save_user_add").click(function (e) {
-        var name = $("#add_name").val();
-        if (isEmpty(name)) {
-            alert("name not be null");
-            return;
-        }
-        var username = $("#add_username").val();
-        if (isEmpty(username)) {
-            alert("username not be null");
-            return;
-        }
-        var password = $("#add_password").val();
-        if (isEmpty(password)) {
-            alert("password not be null");
-            return;
-        }
-        var join_date = $("#add_join_date").val();
-        ajax("employee/save_user/", "post", {
-            "name": name,
-            "username": username,
-            "password": password,
-            "join_date": join_date
-        }, s);
-    });
 
-    //编辑用户模态框
-    $("#edit_emp").click(function (e) {
-        var data = $("#show_emp").bootstrapTable('getSelections');
-        if (isEmpty(data) || data.length != 1) {
-            alert("Please select one and only one record..(请选择一条且只能选择一条记录)")
+    //删除考试记录
+    $("#del_emp").click(function () {
+        var datas = $("#show_record").bootstrapTable("getSelections");
+        if (isEmpty(datas)) {
+            alert("Please select at least one record.(请至少选择一条记录)");
             return;
         }
-        var user = data[0];
-        console.log(user);
-        $("#edit_name").val(user.name);
-        $("#edit_username").val(user.username);
-        $("#edit_user_modal").modal("show");
-    });
 
-
-    //保存用户修改
-    $("#save_user_edit").click(function (e) {
-        var data = $("#show_emp").bootstrapTable('getSelections');
-        var user = data[0];
-        var name = $("#edit_name").val();
-        if (isEmpty(name)) {
-            alert("name not be null");
-            return;
-        }
-        var username = $("#edit_username").val();
-        if (isEmpty(username)) {
-            alert("username not be null");
-            return;
-        }
-        var password = $("#edit_password").val();
-        ajax("employee/save_user/", "post", {
-            user_id: user.id,
-            name: $("#edit_name").val(),
-            username: $("#edit_username").val(),
-            password: isEmpty(password) ? user.password : password
-        }, s);
-    });
-    //删除用户
-    $("#del_emp").click(function (e) {
-        var data = $("#show_emp").bootstrapTable('getSelections');
-        if (isEmpty(data) || data.length != 1) {
-            alert("Please select one and only one record..(请选择一条且只能选择一条记录)")
-            return;
-        }
-        var user = data[0];
-        ajax("employee/del_user/", "post", {
-            user_id: user.id
-        }, d);
-    });
-    //详情查看
-    $("#record_detail").click(function (e) {
-        var data = $("#show_emp").bootstrapTable('getSelections');
-        if (isEmpty(data) || data.length != 1) {
-            alert("Please select one and only one record..(请选择一条且只能选择一条记录)")
-            return;
-        }
-        var user = data[0];
-        $("#show_name").text(user.name);
-        //初始化表格展示当前学生考试记录
-        init_table("../record/", "record_dom", "show_record", [
-            {
-                checkbox: true
-            },
-            {
-                field: "exam_date",
-                title: "exam date(考试日期)"
-            },
-            {
-                field: "lib_name",
-                title: "lib name(题库)"
-            },
-            {
-                field: "is_pass",
-                title: "is pass(是否通过)",
-                formatter: type_format
-            },
-            {
-                field: "score",
-                title: "score(得分)"
-            },
-            {
-                field: "exam_count",
-                title: "exam count(考试次数)",
-                formatter: count_format
+        if (confirm("confirm to delete? This will delete the selected record and is not recoverable!")) {
+            var array = new Array();
+            for (var i = 0; i < datas.length; i++) {
+                array.push(datas[i].id);
             }
-        ], {"user_id": user.id});
-        $("#record_detail_modal").modal("show");
+            ajax("../employee/del_record/", "post", {ids: array.join(",")}, d);
+        }
     });
-    //详情界面查看具体成绩
-    $("#show_details").click(function (e) {
-        var data = $("#show_record").bootstrapTable('getSelections');
+
+
+    $("#record_detail").click(function () {
+        var data = $("#show_record").bootstrapTable("getSelections");
         if (isEmpty(data) || data.length != 1) {
-            alert("Please select one and only one record..(请选择一条且只能选择一条记录)")
+            alert("Please select one record and only one.(请选择一条记录且只能选择一条)");
             return;
         }
+        $("#record_detail_modal").modal("show");
         var record = data[0];
-        window.open("../../employee/record/?id=" + record.id);
+        $("#show_record").text(record.name);
+        show_record_table(record.id);
+    });
+
+    $('#record_detail_modal').on('hidden.bs.modal', function (e) {
+        create_table();
     });
 });
 
-var count_format = function (value, row, index) {
-    return value + "th";
+
+function show_record_table(record_id) {
+    var columns = new Array();
+    columns.push(
+        {
+            field: "question",
+            title: "Test 考试题"
+        },
+        {
+            field: "step",
+            title: "step 步骤"
+        },
+        {
+            field: "score",
+            title: "Marks 分数"
+        },
+        {
+            field: "is_pass",
+            title: "Pass 合格"
+        },
+        {
+            field: "remarks",
+            title: "Remarks"
+        }
+    );
+    $("#record_dom").html("");
+    $("#modal_table").clone(true).attr("id", "show_steps").appendTo("#record_dom");
+    $("#show_steps").bootstrapTable({
+        url: "../query_detail/",
+        queryParams: function (params) {
+            params["r_id"] = record_id;
+            return params;
+        },
+        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+        method: "post",
+        columns: columns,
+        pagination: true,
+        pageSize: 10,
+        pageList: [10, 20, 50],
+        search: true,
+        trimOnSearch: true,
+        showExport: true,
+        exportDataType: "all",
+        exportTypes: ["excel", "pdf"],
+        buttonsAlign: "right",
+        exportOptions: {
+            //ignoreColumn: [0, 1],  //忽略某一列的索引
+            fileName: "exam record",  //文件名称设置
+            worksheetName: 'sheet1',  //表格工作区名称
+            excelstyles: ['background-color', 'color', 'font-size', 'font-weight'],
+            //onMsoNumberFormat: DoOnMsoNumberFormat
+        }
+    });
 }
 
 
-var type_format = function (value, row, index) {
-    if(value){
-        return true;
-    }else{
-        return false;
-    }
-}
-
-
-//删除用户回调函数
-var d = function (msg) {
-    if (msg.status) {
+function d(msg) {
+    if (msg.msg) {
         create_table();
     }
 }
 
 
-//保存用户的回调函数
-var s = function (msg) {
-    if (msg.status) {
-        $("#add_user_modal").modal("hide");
-        $("#edit_user_modal").modal("hide");
-    }
-    create_table();
-}
-
-
 function create_table() {
     //初始化表格展示当前题库
-    init_table("../show_employee/", "emp_table_dom", "show_emp", [
+    init_table("../show_record/", "emp_table_dom", "show_record", [
         {
             checkbox: true
         },
@@ -173,12 +110,30 @@ function create_table() {
             title: "name(姓名)"
         },
         {
-            field: "username",
-            title: "username(用户名)"
-        },
-        {
             field: "join_date",
             title: "join date(入职时间)"
+        },
+        {
+            field: "exam_date",
+            title: "exam date(考试时间)"
+        },
+        {
+            field: "score",
+            title: "score(得分)"
+        },
+        {
+            field: "is_pass",
+            title: "is pass(合格)"
+        },
+        {
+            field: "exam_count",
+            title: "Exam Number(考试次数)",
+            formatter: count_format
         }
     ], "");
+}
+
+
+function count_format(value, row, index) {
+    return value + "th";
 }

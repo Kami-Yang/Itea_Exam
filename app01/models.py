@@ -111,6 +111,7 @@ class ExamRecord(models.Model):
 
     class Meta:
         verbose_name = "the record of exam"
+        ordering = ["name", "exam_count"]
 
     # def answer_as_list(self):
     #     """
