@@ -60,10 +60,11 @@ def end_exam(request):
     all_score = 0
     questions = models.Question.objects.all().order_by("add_time")
     for question in questions:
+        for step in question.steps:
+            all_score += step.score
         answers = models.AnswerRecord.objects.filter(exam=e_id, question=question.id)
         for ans in answers:
             score += ans.score
-            all_score += ans.step.score
             if not ans.is_right and ans.step.importance:
                 is_p = False
             result.append({"question": question.text, "step": ans.step.detail, "score": ans.score,
